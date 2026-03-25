@@ -1,0 +1,114 @@
+/* ±Quantum — Halftone Prototype */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a0c;
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: none;
+}
+
+#grid-canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ── UI Overlay ── */
+
+#ui-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(224, 224, 224, 0.08);
+  pointer-events: auto;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#controls.hidden {
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+#controls label {
+  color: #606070;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+#controls select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(224, 224, 224, 0.12);
+  color: #c0c0c8;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+#controls select:hover {
+  border-color: rgba(224, 224, 224, 0.25);
+}
+
+#btn-toggle-ui {
+  margin-left: auto;
+  background: none;
+  border: 1px solid rgba(224, 224, 224, 0.1);
+  color: #606070;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#btn-toggle-ui:hover {
+  color: #e0e0e0;
+  border-color: rgba(224, 224, 224, 0.25);
+}
+
+#info-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 20px;
+  background: rgba(10, 10, 12, 0.7);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+#info-bar.hidden {
+  opacity: 0;
+}
+
+#info-text {
+  color: #404050;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}

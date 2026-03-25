@@ -1,0 +1,21 @@
+{
+  "name": "entangled_observation",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "±Quantum: Entangled Observation Installation",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "quantum-circuit": "^0.9.247",
+    "ws": "^8.20.0"
+  }
+}

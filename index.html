@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>±Quantum — Halftone Prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="grid-canvas"></canvas>
+
+  <!-- Image selector overlay -->
+  <div id="ui-overlay">
+    <div id="controls">
+      <label for="image-select">Image:</label>
+      <select id="image-select">
+        <option value="pic/falco-negenman-LMCqMKKKMgc-unsplash.jpg">falco-negenman</option>
+        <option value="pic/frank-mckenna-OD9EOzfSOh0-unsplash.jpg">frank-mckenna</option>
+        <option value="pic/irina-iriser-2Y4dE8sdhlc-unsplash.jpg">irina-iriser</option>
+        <option value="pic/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg">joseph-barrientos</option>
+        <option value="pic/lukasz-szmigiel-2ShvY8Lf6l0-unsplash.jpg" selected>lukasz-szmigiel</option>
+        <option value="pic/sebastian-unrau-sp-p7uuT0tw-unsplash.jpg">sebastian-unrau</option>
+        <option value="pic/yucar-studios-cfR-V1QuEKw-unsplash.jpg">yucar-studios</option>
+      </select>
+      <button id="btn-toggle-ui" title="Hide controls">✕</button>
+    </div>
+    <div id="info-bar">
+      <span id="info-text">Move mouse to observe. Press H to show/hide controls.</span>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

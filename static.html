@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>±Quantum — Pattern Preview</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    #controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .control-group label {
+      color: #888;
+      font-size: 11px;
+    }
+    #gamma-slider {
+      width: 100px;
+      accent-color: #667;
+    }
+    #gamma-value {
+      color: #aaa;
+      font-size: 11px;
+      min-width: 28px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="grid-canvas"></canvas>
+
+  <div id="ui-overlay">
+    <div id="controls">
+      <div class="control-group">
+        <label for="image-select">MODE:</label>
+        <select id="image-select">
+          <optgroup label="— Hybrid: L1+L2 (QW + Quantum Circuit) —">
+            <option value="__hybrid" selected>⚛ Hybrid (wave + measurement)</option>
+          </optgroup>
+          <optgroup label="— Quantum Walk L1 only —">
+            <option value="__qw:ripple">〰 Interference (3 sources)</option>
+            <option value="__qw:single">◉ Single Ripple</option>
+            <option value="__qw:edge">▸ Edge Wave</option>
+          </optgroup>
+          <optgroup label="— Procedural (comparison) —">
+            <option value="__proc:ripple">〰 Sinusoidal Ripple</option>
+            <option value="__proc:reaction">◎ Reaction-Diffusion</option>
+          </optgroup>
+          <optgroup label="— Photos (static) —">
+            <option value="pic/lukasz-szmigiel-2ShvY8Lf6l0-unsplash.jpg">lukasz-szmigiel</option>
+            <option value="pic/joseph-barrientos-oQl0eVYd_n8-unsplash.jpg">joseph-barrientos</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="gamma-slider">γ:</label>
+        <input type="range" id="gamma-slider" min="0.15" max="2.0" step="0.05" value="0.5">
+        <span id="gamma-value">0.5</span>
+      </div>
+
+      <span style="color:#506070; font-size:11px;">mouse = quantum measurement (observe → collapse)</span>
+
+      <!-- WebSocket entanglement status: appears only when ?role=A or ?role=B -->
+      <span id="ws-status" style="width:8px; height:8px; border-radius:50%; display:none; flex-shrink:0;"
+            title="Not connected"></span>
+    </div>
+  </div>
+
+  <script type="module" src="js/static-preview.js"></script>
+</body>
+</html>

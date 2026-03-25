@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>±Quantum — Control Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    html, body { cursor: default !important; overflow: auto; }
+    #grid-canvas { display: none; }
+
+    .admin-panel {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #c0c0c8;
+    }
+    .admin-panel h1 {
+      font-size: 18px;
+      color: #e0e0e8;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(224,224,224,0.1);
+      padding-bottom: 12px;
+    }
+    .admin-panel h2 {
+      font-size: 13px;
+      color: #808090;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 20px 0 8px;
+    }
+    .status-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .links a {
+      display: block;
+      padding: 10px 16px;
+      margin: 6px 0;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      color: #a0a0b0;
+      text-decoration: none;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .links a:hover {
+      background: rgba(255,255,255,0.08);
+      color: #e0e0e8;
+    }
+    .links a code {
+      color: #6ac;
+      font-size: 11px;
+    }
+    .info {
+      font-size: 11px;
+      color: #505060;
+      line-height: 1.6;
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-panel">
+    <h1>±Quantum Control Panel</h1>
+
+    <h2>展示ディスプレイ</h2>
+    <div class="links">
+      <a href="display.html?role=A" target="_blank">
+        Display A — 全画面（アイトラッキング）<br>
+        <code>display.html?role=A</code>
+      </a>
+      <a href="display.html?role=B" target="_blank">
+        Display B — 全画面（アイトラッキング）<br>
+        <code>display.html?role=B</code>
+      </a>
+    </div>
+    <p class="info">
+      各ディスプレイは独自のパターンを表示。Aの観測がBのタイルも崩壊させるが、
+      Bには B自身のパターンが出現する（Bell状態モデル）。
+    </p>
+
+    <h2>開発プレビュー</h2>
+    <div class="links">
+      <a href="static.html" target="_blank">
+        スタンドアロン（エンタングルメント無し）<br>
+        <code>static.html</code>
+      </a>
+      <a href="static.html?role=A" target="_blank">
+        プレビュー A（コントロール付）<br>
+        <code>static.html?role=A</code>
+      </a>
+      <a href="static.html?role=B" target="_blank">
+        プレビュー B（コントロール付）<br>
+        <code>static.html?role=B</code>
+      </a>
+    </div>
+
+    <h2>システム状態</h2>
+    <div id="status-container">
+      <div class="status-row">
+        <span class="status-dot" id="server-dot" style="background:#ef4444"></span>
+        <span>WebSocket サーバー</span>
+        <span id="server-status" style="margin-left:auto; font-size:11px; color:#606070;">checking...</span>
+      </div>
+      <div class="status-row">
+        <span class="status-dot" id="a-dot" style="background:#333"></span>
+        <span>Display A</span>
+        <span id="a-status" style="margin-left:auto; font-size:11px; color:#606070;">—</span>
+      </div>
+      <div class="status-row">
+        <span class="status-dot" id="b-dot" style="background:#333"></span>
+        <span>Display B</span>
+        <span id="b-status" style="margin-left:auto; font-size:11px; color:#606070;">—</span>
+      </div>
+    </div>
+
+    <h2>エンタングルメント設計</h2>
+    <p class="info">
+      Bell状態 |Φ+⟩ = (|00⟩+|11⟩)/√2 のモデル。<br>
+      ・崩壊タイミングが相関（AでタイルXが崩壊→BでもタイルXが崩壊）<br>
+      ・崩壊結果は各ディスプレイの局所基底（パターン画像）で決定<br>
+      ・AとBは異なるパターンを表示（A=干渉縞, B=眼, etc.）<br>
+      ・20秒サイクルでパターンが切り替わる
+    </p>
+  </div>
+
+  <script>
+    // Check WebSocket server connection
+    const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = `${protocol}//${location.host}/ws?role=control`;
+
+    function checkServer() {
+      const ws = new WebSocket(wsUrl);
+      ws.onopen = () => {
+        document.getElementById('server-dot').style.background = '#4ade80';
+        document.getElementById('server-status').textContent = 'connected';
+        ws.close();
+      };
+      ws.onerror = () => {
+        document.getElementById('server-dot').style.background = '#ef4444';
+        document.getElementById('server-status').textContent = 'offline';
+      };
+    }
+    checkServer();
+    setInterval(checkServer, 10000);
+  </script>
+</body>
+</html>

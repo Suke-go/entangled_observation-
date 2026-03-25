@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>±Quantum — Display</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Full-screen display mode: no UI, no cursor */
+    html, body {
+      cursor: none !important;
+      overflow: hidden;
+      background: #0a0a0c;
+    }
+    #grid-canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+    }
+    /* Minimal status indicator (top-right corner) */
+    #status-bar {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+    }
+    #status-bar:hover { opacity: 1; }
+    #ws-status {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    #gaze-status {
+      color: #505060;
+      font-size: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+  </style>
+  <!-- WebGazer.js as fallback (MediaPipe FaceLandmarker loads dynamically from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/webgazer@3.5.3/dist/webgazer.min.js" defer></script>
+</head>
+<body>
+  <canvas id="grid-canvas"></canvas>
+
+  <!-- Minimal status: connection + gaze source -->
+  <div id="status-bar">
+    <span id="gaze-status">initializing...</span>
+    <span id="ws-status" title="Not connected"></span>
+  </div>
+
+  <script type="module" src="js/static-preview.js"></script>
+</body>
+</html>
